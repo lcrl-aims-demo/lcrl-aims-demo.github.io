@@ -10,8 +10,7 @@ title: "Logically Constrained Reinforcement Learning Tutorial"
 - [Reinforcement Learning](#reinforcement-learning)
 - [Temporal Logics and Automata](#temporal-logics-and-automata)
 - [Logically Constrained Reinforcement Learning](#logically-constrained-reinforcemen-learning)
-- [Further Exploration](#further-exploration)
-- [Contact & Support](#contact--support)
+- [Advanced exercises](#advanced-exercises)
 
 ## Overview
 
@@ -93,3 +92,27 @@ In this context, the only addition to a standard RL environment is a labeling fu
        )
    ```
 5. Run `python aims/train.py` and discuss the output.
+
+## Advanced Exercises
+
+1. Create and run a new training script that mirrors the structure below:
+
+   ```python
+   from lcrl.train import train
+   from lcrl.environments.frozen_lake_4 import FrozenLake
+   from lcrl.automata.frozen_lake_4_5_6 import frozen_lake_4_5_6
+
+   if __name__ == "__main__":
+       MDP = FrozenLake
+       LDBA = frozen_lake_4_5_6
+       task = train(
+           MDP,
+           LDBA,
+           algorithm="ql",
+           episode_num=3_000,
+           iteration_num_max=4_000,
+       )
+   ```
+2. Inspect `src/lcrl/automata/frozen_lake_4_5_6.py` to understand the reference automaton.
+3. Implement your own automaton class for the specification “goal1 then goal2 then goal4 then goal3 while avoiding unsafe” (note the reordered goals).
+4. Train an agent in `frozen_lake_4` using the automaton you just created and analyze the learning outcome.

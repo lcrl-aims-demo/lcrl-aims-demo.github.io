@@ -41,8 +41,7 @@
   <li><a href="#reinforcement-learning">Reinforcement Learning</a></li>
   <li><a href="#temporal-logics-and-automata">Temporal Logics and Automata</a></li>
   <li><a href="#logically-constrained-reinforcemen-learning">Logically Constrained Reinforcement Learning</a></li>
-  <li><a href="#further-exploration">Further Exploration</a></li>
-  <li><a href="#contact--support">Contact &amp; Support</a></li>
+  <li><a href="#advanced-exercises">Advanced exercises</a></li>
 </ul>
 
 <h2 id="overview">Overview</h2>
@@ -136,6 +135,33 @@ pip3 <span class="nb">install</span> <span class="nt">-e</span> <span class="nb"
 </code></pre></div>    </div>
   </li>
   <li>Run <code class="language-plaintext highlighter-rouge">python aims/train.py</code> and discuss the output.</li>
+</ol>
+
+<h2 id="advanced-exercises">Advanced Exercises</h2>
+
+<ol>
+  <li>
+    <p>Create and run a new training script that mirrors the structure below:</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">lcrl.train</span> <span class="kn">import</span> <span class="n">train</span>
+<span class="kn">from</span> <span class="nn">lcrl.environments.frozen_lake_4</span> <span class="kn">import</span> <span class="n">FrozenLake</span>
+<span class="kn">from</span> <span class="nn">lcrl.automata.frozen_lake_4_5_6</span> <span class="kn">import</span> <span class="n">frozen_lake_4_5_6</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">MDP</span> <span class="o">=</span> <span class="n">FrozenLake</span>
+    <span class="n">LDBA</span> <span class="o">=</span> <span class="n">frozen_lake_4_5_6</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span>
+        <span class="n">MDP</span><span class="p">,</span>
+        <span class="n">LDBA</span><span class="p">,</span>
+        <span class="n">algorithm</span><span class="o">=</span><span class="s">"ql"</span><span class="p">,</span>
+        <span class="n">episode_num</span><span class="o">=</span><span class="mi">3_000</span><span class="p">,</span>
+        <span class="n">iteration_num_max</span><span class="o">=</span><span class="mi">4_000</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Inspect <code class="language-plaintext highlighter-rouge">src/lcrl/automata/frozen_lake_4_5_6.py</code> to understand the reference automaton.</li>
+  <li>Implement your own automaton class for the specification “goal1 then goal2 then goal4 then goal3 while avoiding unsafe” (note the reordered goals).</li>
+  <li>Train an agent in <code class="language-plaintext highlighter-rouge">frozen_lake_4</code> using the automaton you just created and analyze the learning outcome.</li>
 </ol>
 </div>
 
