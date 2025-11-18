@@ -3,9 +3,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Logically Constrained Reinforcement Learning - Demo at AIMS 2025 | Logically Constrained Reinforcement Learning - Demo at AIMS 2025</title>
+<title>Logically Constrained Reinforcement Learning Tutorial | Logically Constrained Reinforcement Learning - Demo at AIMS 2025</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Logically Constrained Reinforcement Learning - Demo at AIMS 2025" />
+<meta property="og:title" content="Logically Constrained Reinforcement Learning Tutorial" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Logically Constrained Reinforcement Learning - Demo at AIMS 2025" />
 <meta property="og:description" content="Logically Constrained Reinforcement Learning - Demo at AIMS 2025" />
@@ -14,9 +14,9 @@
 <meta property="og:site_name" content="Logically Constrained Reinforcement Learning - Demo at AIMS 2025" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Logically Constrained Reinforcement Learning - Demo at AIMS 2025" />
+<meta property="twitter:title" content="Logically Constrained Reinforcement Learning Tutorial" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","description":"Logically Constrained Reinforcement Learning - Demo at AIMS 2025","headline":"Logically Constrained Reinforcement Learning - Demo at AIMS 2025","name":"Logically Constrained Reinforcement Learning - Demo at AIMS 2025","url":"https://lcrl-aims-demo.github.io/"}</script>
+{"@context":"https://schema.org","@type":"WebSite","description":"Logically Constrained Reinforcement Learning - Demo at AIMS 2025","headline":"Logically Constrained Reinforcement Learning Tutorial","name":"Logically Constrained Reinforcement Learning - Demo at AIMS 2025","url":"https://lcrl-aims-demo.github.io/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://lcrl-aims-demo.github.io/feed.xml" title="Logically Constrained Reinforcement Learning - Demo at AIMS 2025" /></head>
 <body><header class="site-header" role="banner">
@@ -31,12 +31,110 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/">Logically Constrained Reinforcement Learning Tutorial</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <div class="home">
+        <div class="home"><h1 class="page-heading">Logically Constrained Reinforcement Learning Tutorial</h1><ul>
+  <li><a href="#overview">Overview</a></li>
+  <li><a href="#reinforcement-learning">Reinforcement Learning</a></li>
+  <li><a href="#temporal-logics-and-automata">Temporal Logics and Automata</a></li>
+  <li><a href="#logically-constrained-reinforcemen-learning">Logically Constrained Reinforcement Learning</a></li>
+  <li><a href="#further-exploration">Further Exploration</a></li>
+  <li><a href="#contact--support">Contact &amp; Support</a></li>
+</ul>
+
+<h2 id="overview">Overview</h2>
+
+<h2 id="reinforcement-learning">Reinforcement Learning</h2>
+<p>We begin with a refresher on the reinforcement-learning loop: agents observe a state, choose an action, receive a reward, and transition to a new state.</p>
+
+<ol>
+  <li>Open Andrej Karpathy’s Gridworld demo (<a href="https://cs.stanford.edu/people/karpathy/reinforcejs/gridworld_td.html">reinforcejs/gridworld_td</a>).
+    <blockquote>
+      <p>This is a toy environment called Gridworld that is often used as a toy model in the Reinforcement Learning literature. In this particular case:</p>
+
+      <p><strong>State space:</strong> GridWorld has 10x10 = 100 distinct states. The start state is the top left cell. The gray cells are walls and cannot be moved to.</p>
+
+      <p><strong>Actions:</strong> The agent can choose from up to 4 actions to move around.</p>
+
+      <p><strong>Environment Dynamics:</strong> GridWorld is deterministic, leading to the same new state given each state and action.</p>
+
+      <p><strong>Rewards:</strong> The agent receives +1 reward when it is in the center square (the one that shows <code class="language-plaintext highlighter-rouge">R 1.0</code>), and -1 reward in a few states (<code class="language-plaintext highlighter-rouge">R -1.0</code> is shown for these). The state with +1.0 reward is the goal state and resets the agent back to start.</p>
+
+      <p>In other words, this is a deterministic, finite Markov Decision Process (MDP) and as always the goal is to find an agent policy (shown here by arrows) that maximizes the future discounted reward. My favorite part is letting Value iteration converge, then change the cell rewards and watch the policy adjust.</p>
+
+      <p><strong>Interface:</strong> The color of the cells (initially all white) shows the current estimate of the value (discounted reward) of that state, with the current policy. Note that you can select any cell and change its reward with the Cell reward slider.</p>
+    </blockquote>
+  </li>
+  <li>Before running anything, inspect the grid and reward layout, sketch what you think the optimal policy is, and note which states look risky versus attractive.</li>
+  <li>Reset the environment, click “go slow,” then click “toggle td learning” to start training; watch which zones the agent explores and how each state’s estimated value updates over time until the policy stabilizes—does it match your initial hypothesis?</li>
+  <li>Reset the agent and repeat the experiment with a very small exploration rate and then a large one; compare how quickly the policy improves and whether it gets stuck in suboptimal loops.</li>
+  <li>Feel free to play around modifying the reward of any cells and rerunning training to observe how the optimal policy adapts.</li>
+</ol>
+
+<h2 id="temporal-logics-and-automata">Temporal Logics and Automata</h2>
+<p>We motivate temporal logics as a language for expressing behavioral constraints over entire trajectories—goals that involve ordering, persistence, or repetition rather than single-step rewards. In this setting, every Linear Temporal Logic (LTL) specification can be translated into a finite automaton whose accepted words are exactly the trajectories that satisfy the specification.</p>
+
+<blockquote>
+  <p>Recall the key temporal operators: <code class="language-plaintext highlighter-rouge">F p</code> (eventually p becomes true), <code class="language-plaintext highlighter-rouge">G p</code> (globally, p holds at every step), and <code class="language-plaintext highlighter-rouge">X p</code> (in the next step, p holds).</p>
+</blockquote>
+
+<p>Using the Spot LTL visualizer—an interactive tool maintained by the Spot research team—we experiment with these translations to build intuition for the acceptance conditions and the structure of the resulting automata.</p>
+
+<ol>
+  <li>Open the Spot web interface (<a href="https://spot.lre.epita.fr/app/">spot.lre.epita.fr/app/</a>), set “Acceptance” to “Generalized Büchi,” and enable the “small” and “complete” options.</li>
+  <li>Enter the formula <code class="language-plaintext highlighter-rouge">F goal</code> to generate an automaton for “eventually reach the goal”; note which states are accepting.</li>
+  <li>Replace it with the safety formula <code class="language-plaintext highlighter-rouge">G !unsafe</code>; observe how the automaton enforces avoidance by making every unsafe transition go to a rejecting sink.</li>
+  <li>Compose both requirements as <code class="language-plaintext highlighter-rouge">F goal &amp; G !unsafe</code>; compare it to the previous automata—why does this construction enforce both constraints?</li>
+  <li>Consider the formula <code class="language-plaintext highlighter-rouge">F (goal1 &amp; X (F goal2)) &amp; G !unsafe</code>; provide one sequence of labels that satisfies it and one that violates it.</li>
+  <li>Generate the automaton for that formula in Spot—how does the construction enforce visiting <code class="language-plaintext highlighter-rouge">goal1</code> before <code class="language-plaintext highlighter-rouge">goal2</code> while still avoiding <code class="language-plaintext highlighter-rouge">unsafe</code>?</li>
+</ol>
+
+<h2 id="logically-constrained-reinforcement-learning">Logically Constrained Reinforcement Learning</h2>
+
+<p>Logically-Constrained Reinforcement Learning (LCRL) is a model-free framework that couples an agent with an automaton for a given Linear Temporal Logic (LTL) property, shapes rewards on the fly, and synthesizes policies that maximize the probability of satisfying the specification in discrete and continuous-state-action MDPs.
+In this context, the only addition to a standard RL environment is a labeling function that maps each state to the atomic propositions referenced by the LTL property. As in standard RL, the underlying MDP can stay unknown; the agent only needs each observation to include its label so it can synchronize with the automaton on the fly.</p>
+
+<p><img src="https://raw.githubusercontent.com/grockious/lcrl/master/assets/lcrl_overview.png" alt="LCRL Architecture" /></p>
+
+<ol>
+  <li>Clone the repository and install it in editable mode so you can tweak the examples locally:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/grockious/lcrl.git
+<span class="nb">cd </span>lcrl
+pip3 <span class="nb">install</span> <span class="nt">-e</span> <span class="nb">.</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Inspect <code class="language-plaintext highlighter-rouge">src/lcrl/automata/goal1_then_goal2.py</code>; the <code class="language-plaintext highlighter-rouge">step</code> function there mirrors the Spot automaton you generated earlier.
+    <div align="center">
+<img src="https://raw.githubusercontent.com/grockious/lcrl/master/assets/F(goal1%20%26%20XF(goal2))%20%26%20G!unsafe%20-%20by%20SPOT.png" alt="Spot automaton for F(goal1 &amp; X(F goal2)) &amp; G !unsafe" />
+</div>
+  </li>
+  <li>Inspect <code class="language-plaintext highlighter-rouge">src/lcrl/environments/SlipperyGrid.py</code> and <code class="language-plaintext highlighter-rouge">src/lcrl/environments/gridworld_1.py</code>; the first implements the slippery grid dynamics, while the second layers the labeling function on top.
+    <div align="center">
+<img src="https://raw.githubusercontent.com/grockious/lcrl/master/assets/layout_1.png" alt="Slippery grid layout annotated with propositions" />
+</div>
+  </li>
+  <li>Create a directory <code class="language-plaintext highlighter-rouge">aims/</code> for your experiments and add <code class="language-plaintext highlighter-rouge">aims/train.py</code> with the starter script below. It trains an agent for the <code class="language-plaintext highlighter-rouge">goal1_then_goal2</code> specification in <code class="language-plaintext highlighter-rouge">gridworld_1</code> using Q-learning:
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">lcrl.train</span> <span class="kn">import</span> <span class="n">train</span>
+<span class="kn">from</span> <span class="nn">lcrl.environments.gridworld_1</span> <span class="kn">import</span> <span class="n">gridworld_1</span>
+<span class="kn">from</span> <span class="nn">lcrl.automata.goal1_then_goal2</span> <span class="kn">import</span> <span class="n">goal1_then_goal2</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">MDP</span> <span class="o">=</span> <span class="n">gridworld_1</span>
+    <span class="n">LDBA</span> <span class="o">=</span> <span class="n">goal1_then_goal2</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span>
+        <span class="n">MDP</span><span class="p">,</span>
+        <span class="n">LDBA</span><span class="p">,</span>
+        <span class="n">algorithm</span><span class="o">=</span><span class="s">"ql"</span><span class="p">,</span>
+        <span class="n">episode_num</span><span class="o">=</span><span class="mi">3_000</span><span class="p">,</span>
+        <span class="n">iteration_num_max</span><span class="o">=</span><span class="mi">4_000</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Run <code class="language-plaintext highlighter-rouge">python aims/train.py</code> and discuss the output.</li>
+</ol>
 <h2 class="post-list-heading">Posts</h2>
     <ul class="post-list"><li><span class="post-meta">Nov 18, 2025</span>
         <h3>
