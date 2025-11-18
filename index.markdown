@@ -15,6 +15,8 @@ title: "Logically Constrained Reinforcement Learning Tutorial"
 
 ## Overview
 
+This tutorial walks through the pieces needed to understand logically constrained reinforcement learning, connecting standard RL intuition with temporal logic specifications and the automata constructions that make those specifications actionable.
+
 ## Reinforcement Learning 
  We begin with a refresher on the reinforcement-learning loop: agents observe a state, choose an action, receive a reward, and transition to a new state.
 
