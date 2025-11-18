@@ -24,7 +24,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Logically Constrained Reinforcement Learning - Demo at AIMS 2025
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://lcrl-aims-demo.github.io"
-destination: build
+destination: docs
 
 # Build settings
 theme: minima
