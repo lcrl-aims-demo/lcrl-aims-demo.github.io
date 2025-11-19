@@ -3,7 +3,7 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 layout: home
-title: "Logically Constrained Reinforcement Learning Tutorial"
+title: "Logically Constrained Reinforcement Learning - Tutorial at AIMS CDT"
 ---
 
 - [Overview](#overview)
@@ -11,10 +11,13 @@ title: "Logically Constrained Reinforcement Learning Tutorial"
 - [Temporal Logics and Automata](#temporal-logics-and-automata)
 - [Logically Constrained Reinforcement Learning](#logically-constrained-reinforcemen-learning)
 - [Advanced exercises](#advanced-exercises)
+- [Further reading](#further-reading)
 
 ## Overview
 
-This tutorial walks through the pieces needed to understand logically constrained reinforcement learning, connecting standard RL intuition with temporal logic specifications and the automata constructions that make those specifications actionable.
+This tutorial walks through the pieces needed to understand logically constrained reinforcement learning (LCRL), connecting standard RL intuition with temporal logic specifications and the automata constructions that allows to check such specifications. LCRL was developed by [Hosein Hasanbeig](https://grockious.github.io) (and collaborators) at [OXCAV](http://oxcav.web.ox.ac.uk).
+
+> This tutorial was tested using Python 3.10. We recommend setting up a [virtual environment](https://docs.python.org/3.10/library/venv.html) and, if needed, managing Python versions with [PyEnv](https://github.com/pyenv/pyenv).
 
 ## Reinforcement Learning 
  We begin with a refresher on the reinforcement-learning loop: agents observe a state, choose an action, receive a reward, and transition to a new state.
@@ -30,7 +33,7 @@ This tutorial walks through the pieces needed to understand logically constraine
    >
    > **Rewards:** The agent receives +1 reward when it is in the center square (the one that shows `R 1.0`), and -1 reward in a few states (`R -1.0` is shown for these). The state with +1.0 reward is the goal state and resets the agent back to start.
    >
-   > In other words, this is a deterministic, finite Markov Decision Process (MDP) and as always the goal is to find an agent policy (shown here by arrows) that maximizes the future discounted reward. My favorite part is letting Value iteration converge, then change the cell rewards and watch the policy adjust.
+   > In other words, this is a deterministic, finite Markov Decision Process (MDP) and as always the goal is to find an agent policy (shown here by arrows) that maximizes the future discounted reward.
    >
    > **Interface:** The color of the cells (initially all white) shows the current estimate of the value (discounted reward) of that state, with the current policy. Note that you can select any cell and change its reward with the Cell reward slider.
 2. Before running anything, inspect the grid and reward layout, sketch what you think the optimal policy is, and note which states look risky versus attractive.
@@ -56,15 +59,15 @@ Using the Spot LTL visualizer—an interactive tool maintained by the Spot resea
 ## Logically Constrained Reinforcement Learning
 
 Logically-Constrained Reinforcement Learning (LCRL) is a model-free framework that couples an agent with an automaton for a given Linear Temporal Logic (LTL) property, shapes rewards on the fly, and synthesizes policies that maximize the probability of satisfying the specification in discrete and continuous-state-action MDPs.
-In this context, the only addition to a standard RL environment is a labeling function that maps each state to the atomic propositions referenced by the LTL property. As in standard RL, the underlying MDP can stay unknown; the agent only needs each observation to include its label so it can synchronize with the automaton on the fly.
+In this context, the only addition to a standard RL environment is a labeling function L(s) that maps each state to the atomic propositions referenced by the LTL property. As in standard RL, the underlying MDP can stay unknown; the agent only needs each observation to include its label so it can synchronize with the automaton on the fly.
 
 ![LCRL Architecture](https://raw.githubusercontent.com/grockious/lcrl/master/assets/lcrl_overview.png)
 
-1. Clone the repository and install it in editable mode so you can tweak the examples locally:
+1. Clone the repository and install it:
    ```bash
    git clone https://github.com/grockious/lcrl.git
    cd lcrl
-   pip3 install -e .
+   pip3 install .
    ```
 2. Inspect `src/lcrl/automata/goal1_then_goal2.py`; the `step` function there mirrors the Spot automaton you generated earlier.
    <div align="center">
@@ -116,3 +119,10 @@ In this context, the only addition to a standard RL environment is a labeling fu
 2. Inspect `src/lcrl/automata/frozen_lake_4_5_6.py` to understand the reference automaton.
 3. Implement your own automaton class for the specification “goal1 then goal2 then goal4 then goal3 while avoiding unsafe” (note the reordered goals).
 4. Train an agent in `frozen_lake_4` using the automaton you just created and analyze the learning outcome.
+
+## Further Reading
+- The tool is described in [LCRL: Certified Policy Synthesis via Logically-Constrained Reinforcement Learning](https://arxiv.org/abs/2209.10341).
+- The theoretical underpinning of LCRL is presented in [Logically Constrained Reinforcement Learning](https://arxiv.org/abs/1801.08099).
+- The extension of LCRL to deep reinforcement learning appears in [Deep Reinforcement Learning with Temporal Logics](https://www.cs.ox.ac.uk/people/alessandro.abate/publications/bcHKA20.pdf).
+
+> This tutorial was developed by [Agustín Martínez Suñé](https://agusmartinez.ar/), based on a previous tutorial by [Hosein Hasanbeig](https://grockious.github.io).

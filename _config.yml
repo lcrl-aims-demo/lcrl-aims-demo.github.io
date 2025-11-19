@@ -18,10 +18,10 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Logically Constrained Reinforcement Learning - Demo at AIMS 2025
+title: Logically Constrained Reinforcement Learning - Tutorial at AIMS CDT
 email: agustin.martinez.sune@cs.ox.ac.uk
 description: >- # this means to ignore newlines until "baseurl:"
-  Logically Constrained Reinforcement Learning - Demo at AIMS 2025
+  Logically Constrained Reinforcement Learning - Tutorial at AIMS CDT
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://lcrl-aims-demo.github.io"
 destination: docs
